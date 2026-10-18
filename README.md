@@ -23,3 +23,16 @@ Select:
 Click **Debug**.
 
 <img width="500" alt="Debug Preset" src="https://github.com/user-attachments/assets/e042cc2f-5413-4102-9964-a9edd8a3c90a" />
+
+
+note: you may have to do ctrl + shift + p every time you reopen vs code 
+
+if you get this error it means you have to ctrl + shift + p
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/5b46e026-30b3-402d-bfeb-0188d7f5edc6" />
+
+if auto complete isn't working, it may be because of ctrl + shift + p
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/57c687b5-59cd-4397-bda5-9ddc8e5f6fe6" />
+
+

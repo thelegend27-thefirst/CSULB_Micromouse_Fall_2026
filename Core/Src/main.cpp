@@ -61,10 +61,11 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
-
+void StartDefaultTask(void *argument);
+void IR_sensor_task(void *argument);
+void BLE_telemetry_task(void *arguement);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -108,13 +109,39 @@ int main(void)
       "defaultTask",
       128,
       NULL,
-      1,
+      2,
       NULL
   );
 
   if (result != pdPASS) {
     Error_Handler();
-}
+  }
+
+  BaseType_t result2 = xTaskCreate(
+      IR_sensor_task,
+      "IR_sensors",
+      128,
+      NULL,
+      3,
+      NULL
+  );
+
+  if (result2 != pdPASS) {
+    Error_Handler();
+  }
+
+  BaseType_t result3 = xTaskCreate(
+      BLE_telemetry_task,
+      "Bluetooth telemetry",
+      128,
+      NULL,
+      1,
+      NULL
+  );
+
+  if (result3 != pdPASS) {
+    Error_Handler();
+  }
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -300,6 +327,30 @@ void StartDefaultTask(void *argument)
   {
     led.toggle();
     vTaskDelay(100); //100 ms
+  }
+  /* USER CODE END 5 */
+}
+
+void IR_sensor_task(void *argument)
+{
+  /* USER CODE BEGIN 5 */
+  
+  /* Infinite loop */
+  for(;;)
+  {
+
+  }
+  /* USER CODE END 5 */
+}
+
+void BLE_telemetry_task(void *argument)
+{
+  /* USER CODE BEGIN 5 */
+  
+  /* Infinite loop */
+  for(;;)
+  {
+
   }
   /* USER CODE END 5 */
 }

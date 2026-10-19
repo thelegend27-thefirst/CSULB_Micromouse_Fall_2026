@@ -19,6 +19,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "blink.h"
+#include "cmsis_os2.h"
+#include "gpio.hpp"
+#include "stm32f4xx_hal_gpio.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -44,12 +53,6 @@
 UART_HandleTypeDef huart2;
 
 /* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -100,12 +103,21 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  BaseType_t result = xTaskCreate(
+      StartDefaultTask,
+      "defaultTask",
+      128,
+      NULL,
+      1,
+      NULL
+  );
 
+  if (result != pdPASS) {
+    Error_Handler();
+}
   /* USER CODE END 2 */
 
   /* Init scheduler */
-  osKernelInitialize();
-
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
@@ -124,7 +136,6 @@ int main(void)
 
   /* Create the thread(s) */
   /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -135,7 +146,7 @@ int main(void)
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
-  osKernelStart();
+  vTaskStartScheduler();
 
   /* We should never get here as control is now taken by the scheduler */
 
@@ -282,15 +293,16 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
+  
+  GPIO led(GPIOA, GPIO_PIN_5);
   /* Infinite loop */
   for(;;)
   {
-	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-	  HAL_Delay(500);
+    led.toggle();
+    vTaskDelay(100); //100 ms
   }
   /* USER CODE END 5 */
 }
-
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM10 interrupt took place, inside

@@ -34,6 +34,14 @@ enable_language(C CXX ASM)
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME})
 
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY}
+        -O binary
+        $<TARGET_FILE:${CMAKE_PROJECT_NAME}>
+        $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/${CMAKE_PROJECT_NAME}.bin
+    COMMENT "Generating firmware binary"
+)
+
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
 

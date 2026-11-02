@@ -1,6 +1,6 @@
 # CSULB MicroMouse Fall 2026
 
-#First Time Setup 
+# First Time Setup 
 
 Go to Extensions in VS Code.
 

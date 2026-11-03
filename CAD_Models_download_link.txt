@@ -7,4 +7,6 @@ Motors
 https://www.pololu.com/file/0J2042/Pololu%20Micro%20Metal%20Gearmotor%203D%20%28STEP%29%20Models.zip?utm_source=chatgpt.com
 with encoder, side connector -> mmgm-pm-enc-side-con
 
-
+Motor Mounts
+https://www.pololu.com/product/989/resources
+Resources -> File downloads

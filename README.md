@@ -1,5 +1,7 @@
 # CSULB MicroMouse Fall 2026
 
+# First Time Setup 
+
 Go to Extensions in VS Code.
 
 <img width="100" alt="VS Code Extensions" src="https://github.com/user-attachments/assets/0cd1c7fe-b1ff-4cab-9671-eddcdc787a4b" />
